@@ -3,6 +3,11 @@ import argparse
 import os
 import re
 
+# Works with:
+# cat ~/Desktop/gdrive.txt | python3 ~/Dropbox/Programming/Projects/Open\ Source/find_missing/find_missing.py -p 'DSC004.(\d\d\d)' -l DSC004.099
+
+# TODO: determine if strings are ascending or descending and emit error as soon as an unordered string is encountered and stop prematurely rather than have script output erroneous values
+
 class G:
     verbose_opt = False
 
@@ -33,7 +38,8 @@ def main(args):
     if args.last:
         last_match = re.search(pattern_str, args.last)
         if not last_match:
-            raise parser.error("Value provided for last must be findable by provided pattern regex.")
+            raise parser.error("Value provided for last must be findable by provided pattern regex."
+            "\nLast provided: " + args.last + "\nRegex provided: " + args.pattern)
     
     last_seen = -1
     while True:
