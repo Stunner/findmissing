@@ -6,7 +6,8 @@ import re
 # Works with:
 # cat ~/Desktop/gdrive.txt | python3 ~/Dropbox/Programming/Projects/Open\ Source/find_missing/find_missing.py -p 'DSC004.(\d\d\d)' -l DSC004.099
 
-# TODO: determine if strings are ascending or descending and emit error as soon as an unordered string is encountered and stop prematurely rather than have script output erroneous values
+# TODO: determine if strings are ascending or descending and emit error as soon as an unordered string is 
+# encountered and stop prematurely rather than have script output erroneous values
 
 class G:
     verbose_opt = False
@@ -24,7 +25,7 @@ def process_args(args):
     parser.add_argument('--file', '-f', nargs='?', type=argparse.FileType('r'), default=sys.stdin)
     parser.add_argument('--pattern', '-p', help='[P]attern specified with regex and a single group' 
                                                 'that refers to the portion of the string that has numbers.', required=True, nargs="?", default=None)
-    parser.add_argument('--first', '-i', help='F[i]rst string name that is expected to exist. This script will count missing strings from it.', default='0')                                            
+    parser.add_argument('--first', '-i', help='F[i]rst string name that is expected to exist. This script will count missing strings from it.')                                            
     parser.add_argument('--last', '-l', help='[L]ast string name that is expected to exist. This script will count missing strings up to it.')
     parser.add_argument('--verbose', '-v', help='Prints events to STDOUT.', action='store_true')
     args = parser.parse_args()
@@ -35,13 +36,22 @@ def main(args):
     args, parser = process_args(args)
     pattern_str = re.compile(args.pattern)
     last_match = None
+    last_seen = -1
     if args.last:
         last_match = re.search(pattern_str, args.last)
         if not last_match:
             raise parser.error("Value provided for last must be findable by provided pattern regex."
             "\nLast provided: " + args.last + "\nRegex provided: " + args.pattern)
+    first_match = None
+    if args.first:
+        first_match = re.search(pattern_str, args.first)
+        last_seen = int(first_match.group(1))
+        print("last seen: " + str(last_seen))
+        if not first_match:
+            raise parser.error("Value provided for first must be findable by provided pattern regex."
+            "\nLast provided: " + args.first + "\nRegex provided: " + args.pattern)
     
-    last_seen = -1
+    ascend_or_descend = 0
     while True:
         line = args.file.readline()
         if not line:
@@ -56,11 +66,25 @@ def main(args):
             else:
                 # print('itr str: ' + iterable_str)
                 iterable_num = int(iterable_str)
+                if last_seen != -1:
+                    # print("iterable num: " + str(iterable_num) + " last seen: " + str(last_seen))
+                    if iterable_num > last_seen: #ascending
+                        if ascend_or_descend == 0:
+                            ascend_or_descend = 1
+                        else: #already set
+                            if ascend_or_descend == -1:
+                                raise Exception("Iterable string input must be sorted!")
+                    else: #descending
+                        if ascend_or_descend == 0:
+                            ascend_or_descend = -1
+                        else: #already set
+                            if ascend_or_descend == 1:
+                                raise Exception("Iterable string input must be sorted!")
                 # print('itr num: ' + str(iterable_num))
-                difference = iterable_num - last_seen
+                difference = iterable_num - last_seen if ascend_or_descend == 1 else last_seen - iterable_num
                 if difference > 1:
                     for i in range(difference - 1):
-                        last_seen += 1
+                        last_seen = last_seen + 1 if ascend_or_descend == 1 else last_seen - 1
                         print(str(last_seen))
                 last_seen = iterable_num
     
@@ -72,6 +96,15 @@ def main(args):
             for i in range(difference):
                 last_seen += 1
                 print(str(last_seen))
+    #Print strings up from first param.
+    if first_match:
+        iterable_str = first_match.group(1)
+        difference = last_seen - int(iterable_str)
+        if difference > 1:
+            for i in range(difference):
+                last_seen -= 1
+                print(str(last_seen))
+
 
 if __name__ == '__main__':
     main(sys.argv)
