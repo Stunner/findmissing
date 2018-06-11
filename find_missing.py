@@ -151,7 +151,7 @@ def main(args):
     if last_match:
         iterable_str = last_match.group(1)
         difference = int(iterable_str) - last_seen
-        if difference > 1:
+        if difference > 0:
             for i in range(difference):
                 last_seen += 1
                 print(str(last_seen))
