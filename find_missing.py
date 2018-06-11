@@ -17,12 +17,14 @@ class G:
     verbose_opt = False
     parser = None
 
+
 # reference: https://stackoverflow.com/a/11541450/347339
 def is_valid_file(parser, arg):
     if not os.path.exists(arg):
         parser.error("The file %s does not exist!" % arg)
     else:
         return open(arg, 'r')  # return an open file handle
+
 
 def process_args(args):
     parser = argparse.ArgumentParser(description="Takes a list of SORTED strings matching a specified"
@@ -136,7 +138,8 @@ def main(args):
             if i == 0 and first_expected is not None:
                 difference = iterable_num - first_expected
                 stop_early = 0
-            if last_seen != -1:
+                last_seen = first_expected - 1
+            elif last_seen != -1:
                 difference = calc_diff(ascend_or_descend, iterable_num, last_seen)
                 stop_early = 1
             if difference > 1:
