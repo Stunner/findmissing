@@ -107,14 +107,14 @@ def main(args):
         last_match_str = last_match.group(1)
         G.last_match_int = int(last_match_str)
         if not last_match:
-            raise parser.error("Value provided for last must be findable by provided pattern regex."
-                               "\nLast provided: " + args.last + "\nRegex provided: " + args.pattern)
+            raise G.parser.error("Value provided for last must be findable by provided pattern regex."
+                                 "\nLast provided: " + args.last + "\nRegex provided: " + args.pattern)
     first_expected = None
     if args.first:
         first_match = re.search(pattern_str, args.first)
         if not first_match:
-            raise parser.error("Value provided for first must be findable by provided pattern regex."
-                               "\nLast provided: " + args.first + "\nRegex provided: " + args.pattern)
+            raise G.parser.error("Value provided for first must be findable by provided pattern regex."
+                                 "\nLast provided: " + args.first + "\nRegex provided: " + args.pattern)
         else:
             first_expected = int(first_match.group(1))
 
