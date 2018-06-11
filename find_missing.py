@@ -122,6 +122,7 @@ def main(args):
             print("first expected: " + str(first_expected))
     
     ascend_or_descend = init_asc_or_desc_check(pattern_str, args.file)
+    i = 0
     while True:
         line = args.file.readline()
         if not line:
@@ -129,48 +130,24 @@ def main(args):
 
         iterable_num = get_specified_num(pattern_str, line)
         if iterable_num is not None:
-
-            difference = calc_diff(ascend_or_descend, iterable_num, last_seen)
-            if first_expected:
+            if i > 0:
+                ascend_or_descend = asc_or_desc_check(last_seen, iterable_num, ascend_or_descend)
+            difference = 0
+            if first_expected is not None:
                 difference = iterable_num - first_expected
+                stop_early = 0
+            if last_seen != -1:
+                difference = calc_diff(ascend_or_descend, iterable_num, last_seen)
+                stop_early = 1
             if difference > 1:
-                for i in range(difference - 1):
+                for j in range(difference - stop_early):
                     if ascend_or_descend == 1:
                         last_seen = last_seen + 1
                     else:
                         last_seen - 1
                     print(str(last_seen))
             last_seen = iterable_num
-
-        # matches = re.search(pattern_str, line)
-        # if matches:
-        #     try:
-        #         iterable_str = matches.group(1)
-        #     except IndexError as exception:
-        #         raise parser.error("Regex provided in pattern must have group denoting iterable portion of string.")
-        #     else:
-        #         # print('itr str: ' + iterable_str)
-        #         iterable_num = int(iterable_str)
-        #         #asc or descend check
-        #         if last_seen != -1:
-        #             # print("iterable num: " + str(iterable_num) + " last seen: " + str(last_seen))
-        #             if iterable_num > last_seen: #ascending
-        #                 if ascend_or_descend == 0:
-        #                     ascend_or_descend = 1
-        #                 else: #already set
-        #                     if ascend_or_descend == -1:
-        #                         raise Exception("Iterable string input must be sorted!"
-        #                         "\nLast saw: " + str(last_seen) +
-        #                         "\nNow see: " + str(iterable_num))
-        #             else: #descending
-        #                 if ascend_or_descend == 0:
-        #                     ascend_or_descend = -1
-        #                 else: #already set
-        #                     if ascend_or_descend == 1:
-        #                         raise Exception("Iterable string input must be sorted!"
-        #                         "\nLast saw: " + str(last_seen) +
-        #                         "\nNow see: " + str(iterable_num))
-                # print('itr num: ' + str(iterable_num))
+        i += 1
     
     # Print strings up to last param.
     if last_match:
@@ -179,14 +156,6 @@ def main(args):
         if difference > 1:
             for i in range(difference):
                 last_seen += 1
-                print(str(last_seen))
-    # Print strings up from first param.
-    if first_match:
-        iterable_str = first_match.group(1)
-        difference = last_seen - int(iterable_str)
-        if difference > 1:
-            for i in range(difference):
-                last_seen -= 1
                 print(str(last_seen))
 
 
