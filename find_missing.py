@@ -16,7 +16,7 @@ import re
 class G:
     verbose_opt = False
     parser = None
-
+    last_match_int = None
 
 # reference: https://stackoverflow.com/a/11541450/347339
 def is_valid_file(parser, arg):
@@ -101,6 +101,18 @@ def calc_diff(asc_or_des, iterable_num, last_seen):
     return diff
 
 
+def print_diff(diff, asc_or_desc, last_seen, stop_early):
+    for j in range(diff - stop_early):
+        if asc_or_desc == 1:
+            last_seen = last_seen + 1
+        else:
+            last_seen = last_seen - 1
+        if G.last_match_int < last_seen:
+            return True  # stop reading as soon as we get to last number
+        print(str(last_seen))
+    return False
+
+
 def main(args):
     print(args)
     args, G.parser = process_args(args)
@@ -109,6 +121,8 @@ def main(args):
     last_seen = -1
     if args.last:
         last_match = re.search(pattern_str, args.last)
+        last_match_str = last_match.group(1)
+        G.last_match_int = int(last_match_str)
         if not last_match:
             raise parser.error("Value provided for last must be findable by provided pattern regex."
             "\nLast provided: " + args.last + "\nRegex provided: " + args.pattern)
@@ -139,16 +153,14 @@ def main(args):
                 difference = iterable_num - first_expected
                 stop_early = 0
                 last_seen = first_expected - 1
+                if difference < 0:  # keep reading until we get to first expected number
+                    continue
             elif last_seen != -1:
                 difference = calc_diff(ascend_or_descend, iterable_num, last_seen)
                 stop_early = 1
             if difference > 1:
-                for j in range(difference - stop_early):
-                    if ascend_or_descend == 1:
-                        last_seen = last_seen + 1
-                    else:
-                        last_seen = last_seen - 1
-                    print(str(last_seen))
+                if print_diff(difference, ascend_or_descend, last_seen, stop_early):
+                    break
             last_seen = iterable_num
         i += 1
     
