@@ -1,6 +1,5 @@
 import sys
 import argparse
-import os
 import re
 
 # Works with:
@@ -13,17 +12,11 @@ import re
 #TODO: have the first and last params cause output to "stop short" despite more valid iterable strings being present. 
 # Comes in handy during subset inspection.
 
+
 class G:
     verbose_opt = False
     parser = None
     last_match_int = None
-
-# reference: https://stackoverflow.com/a/11541450/347339
-def is_valid_file(parser, arg):
-    if not os.path.exists(arg):
-        parser.error("The file %s does not exist!" % arg)
-    else:
-        return open(arg, 'r')  # return an open file handle
 
 
 def process_args(args):
@@ -45,7 +38,6 @@ def process_args(args):
 
 
 def asc_or_desc_check(num1, num2, asc_or_desc=0):
-    # print("iterable num: " + str(iterable_num) + " last seen: " + str(last_seen))
     asc_or_desc_val = asc_or_desc
     if num2 > num1:  # ascending
         if asc_or_desc_val == 0:
@@ -66,16 +58,6 @@ def asc_or_desc_check(num1, num2, asc_or_desc=0):
     return asc_or_desc_val
 
 
-def init_asc_or_desc_check(pattern, file):
-    # TODO: fix this assumption that 2 lines will always exist...
-    line = file.readline()
-    num1 = get_specified_num(pattern, line)
-    line = file.readline()
-    num2 = get_specified_num(pattern, line)
-    file.seek(0) # reset to beginning of file
-    return asc_or_desc_check(num1, num2)
-
-
 def get_specified_num(pattern, line):
     matches = re.search(pattern, line)
     iterable_str = None
@@ -88,7 +70,8 @@ def get_specified_num(pattern, line):
         try:
             iterable_num = int(iterable_str)
         except TypeError as exception:
-            raise G.parser.error("Regex provided in pattern must have numeric values denoting iterable portion of string.")
+            raise G.parser.error("Regex provided in pattern must have numeric values denoting iterable "
+                                 "portion of string.")
         else:
             return iterable_num
     return None
@@ -125,18 +108,16 @@ def main(args):
         G.last_match_int = int(last_match_str)
         if not last_match:
             raise parser.error("Value provided for last must be findable by provided pattern regex."
-            "\nLast provided: " + args.last + "\nRegex provided: " + args.pattern)
-    first_match = None
+                               "\nLast provided: " + args.last + "\nRegex provided: " + args.pattern)
     first_expected = None
     if args.first:
         first_match = re.search(pattern_str, args.first)
         if not first_match:
             raise parser.error("Value provided for first must be findable by provided pattern regex."
-            "\nLast provided: " + args.first + "\nRegex provided: " + args.pattern)
+                               "\nLast provided: " + args.first + "\nRegex provided: " + args.pattern)
         else:
             first_expected = int(first_match.group(1))
 
-    # ascend_or_descend = init_asc_or_desc_check(pattern_str, args.file)
     ascend_or_descend = 0
     i = -1
     difference = 0
