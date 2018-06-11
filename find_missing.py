@@ -114,7 +114,6 @@ def print_diff(diff, asc_or_desc, last_seen, stop_early):
 
 
 def main(args):
-    print(args)
     args, G.parser = process_args(args)
     pattern_str = re.compile(args.pattern)
     last_match = None
@@ -135,8 +134,7 @@ def main(args):
             "\nLast provided: " + args.first + "\nRegex provided: " + args.pattern)
         else:
             first_expected = int(first_match.group(1))
-            print("first expected: " + str(first_expected))
-    
+
     ascend_or_descend = init_asc_or_desc_check(pattern_str, args.file)
     i = 0
     while True:
