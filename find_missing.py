@@ -44,20 +44,20 @@ def process_args(args):
 
 def asc_or_desc_check(num1, num2, asc_or_desc=0):
     # print("iterable num: " + str(iterable_num) + " last seen: " + str(last_seen))
-    asc_or_desc_val = 0
+    asc_or_desc_val = asc_or_desc
     if num2 > num1:  # ascending
-        if asc_or_desc == 0:
+        if asc_or_desc_val == 0:
             asc_or_desc_val = 1
         else:  # already set
-            if asc_or_desc == -1:
+            if asc_or_desc_val == -1:
                 raise Exception("Iterable string input must be sorted!"
                                 "\nLast saw: " + str(num1) +
                                 "\nNow see: " + str(num2))
     else:  # descending
-        if asc_or_desc == 0:
+        if asc_or_desc_val == 0:
             asc_or_desc_val = -1
         else:  # already set
-            if asc_or_desc == 1:
+            if asc_or_desc_val == 1:
                 raise Exception("Iterable string input must be sorted!"
                                 "\nLast saw: " + str(num1) +
                                 "\nNow see: " + str(num2))
@@ -133,7 +133,7 @@ def main(args):
             if i > 0:
                 ascend_or_descend = asc_or_desc_check(last_seen, iterable_num, ascend_or_descend)
             difference = 0
-            if first_expected is not None:
+            if i == 0 and first_expected is not None:
                 difference = iterable_num - first_expected
                 stop_early = 0
             if last_seen != -1:
@@ -144,7 +144,7 @@ def main(args):
                     if ascend_or_descend == 1:
                         last_seen = last_seen + 1
                     else:
-                        last_seen - 1
+                        last_seen = last_seen - 1
                     print(str(last_seen))
             last_seen = iterable_num
         i += 1
