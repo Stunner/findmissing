@@ -107,7 +107,7 @@ def print_diff(diff, asc_or_desc, last_seen, stop_early):
             last_seen = last_seen + 1
         else:
             last_seen = last_seen - 1
-        if G.last_match_int < last_seen:
+        if G.last_match_int is not None and G.last_match_int < last_seen:
             return True  # stop reading as soon as we get to last number
         print(str(last_seen))
     return False
@@ -118,6 +118,7 @@ def main(args):
     pattern_str = re.compile(args.pattern)
     last_match = None
     last_seen = -1
+    prev_itr_num = -1
     if args.last:
         last_match = re.search(pattern_str, args.last)
         last_match_str = last_match.group(1)
@@ -135,9 +136,12 @@ def main(args):
         else:
             first_expected = int(first_match.group(1))
 
-    ascend_or_descend = init_asc_or_desc_check(pattern_str, args.file)
-    i = 0
+    # ascend_or_descend = init_asc_or_desc_check(pattern_str, args.file)
+    ascend_or_descend = 0
+    i = -1
+    difference = 0
     while True:
+        i += 1
         line = args.file.readline()
         if not line:
             break
@@ -145,22 +149,22 @@ def main(args):
         iterable_num = get_specified_num(pattern_str, line)
         if iterable_num is not None:
             if i > 0:
-                ascend_or_descend = asc_or_desc_check(last_seen, iterable_num, ascend_or_descend)
-            difference = 0
+                ascend_or_descend = asc_or_desc_check(prev_itr_num, iterable_num, ascend_or_descend)
+
             if i == 0 and first_expected is not None:
                 difference = iterable_num - first_expected
                 stop_early = 0
                 last_seen = first_expected - 1
-                if difference < 0:  # keep reading until we get to first expected number
-                    continue
             elif last_seen != -1:
                 difference = calc_diff(ascend_or_descend, iterable_num, last_seen)
                 stop_early = 1
-            if difference > 1:
+            if difference < 0:  # keep reading until we get to first expected number
+                continue
+            elif difference > 1:
                 if print_diff(difference, ascend_or_descend, last_seen, stop_early):
                     break
+            prev_itr_num = iterable_num
             last_seen = iterable_num
-        i += 1
     
     # Print strings up to last param.
     if last_match:
