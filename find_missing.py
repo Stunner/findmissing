@@ -104,11 +104,12 @@ def main(args):
     prev_itr_num = -1
     if args.last:
         last_match = re.search(pattern_str, args.last)
-        last_match_str = last_match.group(1)
-        G.last_match_int = int(last_match_str)
         if not last_match:
             raise G.parser.error("Value provided for last must be findable by provided pattern regex."
                                  "\nLast provided: " + args.last + "\nRegex provided: " + args.pattern)
+        else:
+            last_match_str = last_match.group(1)
+            G.last_match_int = int(last_match_str)
     first_expected = None
     if args.first:
         first_match = re.search(pattern_str, args.first)
