@@ -116,6 +116,7 @@ def main(args):
     ascend_or_descend = 0
     i = -1
     difference = 0
+    aborted = False
     while True:
         i += 1
         line = args.file.readline()
@@ -138,13 +139,14 @@ def main(args):
             if difference < 0:  # keep reading until we get to first expected number
                 continue
             elif difference > 1 and i > 0:
-                if print_diff(difference, ascend_or_descend, last_seen, stop_early):
+                aborted = print_diff(difference, ascend_or_descend, last_seen, stop_early)
+                if aborted:
                     break
             prev_itr_num = iterable_num
             last_seen = iterable_num
     
     # Print strings up to last param.
-    if last_match:
+    if last_match and not aborted:
         iterable_str = last_match.group(1)
         difference = int(iterable_str) - last_seen
         if difference > 0:
