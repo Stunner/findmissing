@@ -6,15 +6,11 @@ import re
 # cat ~/Desktop/gdrive.txt | python3 ~/Dropbox/Programming/Projects/Open\ Source/find_missing/find_missing.py -p
 # 'DSC004.(\d\d\d)' -l DSC004.099
 
-# TODO: determine if strings are ascending or descending and emit error as soon as an unordered string is 
-# encountered and stop prematurely rather than have script output erroneous values
-
-#TODO: have the first and last params cause output to "stop short" despite more valid iterable strings being present. 
-# Comes in handy during subset inspection.
+# TODO: Allow for ranges of missing numbers (i.e. 22-45 54-56 72 73 75) to be displayed instead of listing out all
+# missing numbers which cn be tedious to digest
 
 
 class G:
-    verbose_opt = False
     parser = None
     last_match_int = None
 
@@ -31,9 +27,7 @@ def process_args(args):
                                               ' This script will count missing strings from it.')
     parser.add_argument('--last', '-l', help='[L]ast string name that is expected to exist.'
                                              ' This script will count missing strings up to it.')
-    parser.add_argument('--verbose', '-v', help='Prints events to STDOUT.', action='store_true')
     args = parser.parse_args()
-    G.verbose_opt = args.verbose
     return args, parser
 
 
