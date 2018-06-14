@@ -130,13 +130,14 @@ def main(args):
             if i == 0 and first_expected is not None:
                 difference = iterable_num - first_expected
                 stop_early = 0
-                last_seen = first_expected - 1
+                if first_expected > 0:
+                    last_seen = first_expected - 1
             elif last_seen != -1:
                 difference = calc_diff(ascend_or_descend, iterable_num, last_seen)
                 stop_early = 1
             if difference < 0:  # keep reading until we get to first expected number
                 continue
-            elif difference > 1:
+            elif difference > 1 and i > 0:
                 if print_diff(difference, ascend_or_descend, last_seen, stop_early):
                     break
             prev_itr_num = iterable_num
