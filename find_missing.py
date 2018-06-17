@@ -53,19 +53,22 @@ def asc_or_desc_check(num1, num2, asc_or_desc=0):
 
 
 def get_specified_num(pattern, line):
+    # print("pattern: " + str(pattern) + " line: " + line)
     matches = re.search(pattern, line)
     iterable_str = None
     if matches:
         try:
             iterable_str = matches.group(1)
         except IndexError as exception:
-            raise G.parser.error("Regex provided in pattern must have group denoting iterable portion of string.")
+            raise AttributeError("Regex provided in pattern must have group (specified with parenthesis) denoting "
+                                 "iterable portion of string.")
     if iterable_str:
         try:
             iterable_num = int(iterable_str)
         except TypeError as exception:
-            raise G.parser.error("Regex provided in pattern must have numeric values denoting iterable "
-                                 "portion of string.")
+            raise TypeError("Regex provided in pattern must have numeric values denoting iterable portion of string.")
+        except ValueError as exception:
+            raise ValueError("Regex provided in pattern must have numeric values denoting iterable portion of string.")
         else:
             return iterable_num
     return None
