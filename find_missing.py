@@ -90,13 +90,16 @@ def calc_diff(asc_or_des, iterable_num, last_seen):
 
 def print_last_seen(last_seen):
     # reference: https://stackoverflow.com/a/12028682/347339
-    with io.BytesIO(str(last_seen)) as file:
-        s = file.read()
-        try:
-            print(s)
-        except TypeError as exception:
-            u = unicode(s, "utf-8")
-            print(u)
+    try:  # Python 2.7 compatibility
+        with io.BytesIO(str(last_seen)) as file:
+            s = file.read()
+            try:
+                print(s)
+            except TypeError as exception:
+                u = unicode(s, "utf-8")
+                print(u)
+    except TypeError as exception:
+        print(last_seen)
     # try:
     #     print(str(last_seen))
     # except TypeError as exception:
