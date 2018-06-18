@@ -1,6 +1,13 @@
+from __future__ import print_function
 import sys
 import argparse
 import re
+import io
+
+# if sys.version_info[0] == 2:  # Not named on 2.6
+#     from StringIO import StringIO
+# else:
+#     from io import StringIO
 
 # Works with:
 # cat ~/Desktop/gdrive.txt | python3 ~/Dropbox/Programming/Projects/Open\ Source/find_missing/find_missing.py -p
@@ -81,6 +88,21 @@ def calc_diff(asc_or_des, iterable_num, last_seen):
     return diff
 
 
+def print_last_seen(last_seen):
+    # reference: https://stackoverflow.com/a/12028682/347339
+    with io.BytesIO(str(last_seen)) as file:
+        s = file.read()
+        try:
+            print(s)
+        except TypeError as exception:
+            u = unicode(s, "utf-8")
+            print(u)
+    # try:
+    #     print(str(last_seen))
+    # except TypeError as exception:
+    #     print(last_seen)
+
+
 def print_diff(diff, asc_or_desc, last_seen, stop_early):
     for j in range(diff - stop_early):
         if asc_or_desc == 1:
@@ -89,7 +111,8 @@ def print_diff(diff, asc_or_desc, last_seen, stop_early):
             last_seen = last_seen - 1
         if G.last_match_int is not None and G.last_match_int < last_seen:
             return True  # stop reading as soon as we get to last number
-        print(str(last_seen))
+        print_last_seen(last_seen)
+        # print(str(last_seen))
     return False
 
 
