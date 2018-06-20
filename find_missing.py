@@ -60,7 +60,6 @@ def asc_or_desc_check(num1, num2, asc_or_desc=0):
 
 
 def get_specified_num(pattern, line):
-    # print("pattern: " + str(pattern) + " line: " + line)
     matches = re.search(pattern, line)
     iterable_str = None
     if matches:
@@ -100,10 +99,6 @@ def print_last_seen(last_seen):
                 print(u)
     except TypeError as exception:
         print(last_seen)
-    # try:
-    #     print(str(last_seen))
-    # except TypeError as exception:
-    #     print(last_seen)
 
 
 def print_diff(diff, asc_or_desc, last_seen, stop_early):

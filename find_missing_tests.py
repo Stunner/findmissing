@@ -6,15 +6,16 @@ from find_missing import *
 
 class FindMissingTests(unittest.TestCase):
 
-    def test_calc_diff(self):
-        #TODO: perhaps calc_diff function should be determining ascending or descending state?
-        self.assertEqual(calc_diff(1, 20, -1), 21)
-        self.assertEqual(calc_diff(1, 20, 0), 20)
-        self.assertEqual(calc_diff(1, 20, 20), 0)
-        self.assertEqual(calc_diff(1, 20, 19), 1)
-        self.assertEqual(calc_diff(1, 20, 21), -1)
-        self.assertEqual(calc_diff(0, 20, -1), 21)
-        self.assertEqual(calc_diff(-1, 20, -1), -21)
+    def test_asc_or_desc_check(self):
+        self.assertEqual(asc_or_desc_check(2, 3), 1)
+        self.assertEqual(asc_or_desc_check(2, 3, 1), 1)
+        self.assertRaises(Exception, asc_or_desc_check, 2, 3, -1)
+
+        self.assertEqual(asc_or_desc_check(12, 9), -1)
+        self.assertEqual(asc_or_desc_check(12, 9, -1), -1)
+        self.assertRaises(Exception, asc_or_desc_check, 12, 9, 1)
+
+        self.assertEqual(asc_or_desc_check(8, 8), -1)
 
     def test_get_specified_num(self):
         line = "1krMK432WG2CaFbiNnyBewaksT09he5   DSC003.103   bin    1.1 GB   2018-06-12 20:54:22"
@@ -32,6 +33,16 @@ class FindMissingTests(unittest.TestCase):
         line = "1krMK432WG2CaFbiNnyBewaksT09he5   DSC003.aa   bin    1.1 GB   2018-06-12 20:54:22"
         pattern = re.compile("(DSC)003\.")
         self.assertRaises(ValueError, get_specified_num, pattern, line)
+
+    def test_calc_diff(self):
+        #TODO: perhaps calc_diff function should be determining ascending or descending state?
+        self.assertEqual(calc_diff(1, 20, -1), 21)
+        self.assertEqual(calc_diff(1, 20, 0), 20)
+        self.assertEqual(calc_diff(1, 20, 20), 0)
+        self.assertEqual(calc_diff(1, 20, 19), 1)
+        self.assertEqual(calc_diff(1, 20, 21), -1)
+        self.assertEqual(calc_diff(0, 20, -1), 21)
+        self.assertEqual(calc_diff(-1, 20, -1), -21)
 
     def test_print_diff(self):
         # reference: https://stackoverflow.com/a/34738440/347339
