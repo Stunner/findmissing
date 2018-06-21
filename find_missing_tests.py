@@ -60,6 +60,11 @@ class FindMissingTests(unittest.TestCase):
         self.assertEqual(captured_output.getvalue(), output)
         sys.stdout = sys.__stdout__
 
+    def test_main(self):
+        args = ['find_missing.py', '-f', '/Users/aaron/Desktop/find_missing_bug2.txt',
+                '-p', 'DSC003\\.(\\d+)', '-l', 'DSC003.199']
+        main(args)
+
 
 if __name__ == '__main__':
     unittest.main()

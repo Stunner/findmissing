@@ -34,7 +34,7 @@ def process_args(args):
                                               ' This script will count missing strings from it.')
     parser.add_argument('--last', '-l', help='[L]ast string name that is expected to exist.'
                                              ' This script will count missing strings up to it.')
-    args = parser.parse_args()
+    args = parser.parse_args(args[1:])
     return args, parser
 
 
@@ -115,6 +115,7 @@ def print_diff(diff, asc_or_desc, last_seen, stop_early):
 
 
 def main(args):
+    print("args: " + str(args))
     args, G.parser = process_args(args)
     pattern_str = re.compile(args.pattern)
     last_match = None
@@ -168,7 +169,8 @@ def main(args):
                     break
             prev_itr_num = iterable_num
             last_seen = iterable_num
-    
+
+    args.file.close()
     # Print strings up to last param.
     if last_match and not aborted:
         iterable_str = last_match.group(1)
