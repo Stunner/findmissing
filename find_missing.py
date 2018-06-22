@@ -115,7 +115,7 @@ def print_diff(diff, asc_or_desc, last_seen, stop_early):
 
 
 def main(args):
-    print("args: " + str(args))
+    # print("args: " + str(args))
     args, G.parser = process_args(args)
     pattern_str = re.compile(args.pattern)
     last_match = None

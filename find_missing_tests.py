@@ -54,16 +54,30 @@ class FindMissingTests(unittest.TestCase):
         sys.stdout = sys.__stdout__
 
         captured_output = io.StringIO()  # Create new StringIO object (required to reset previous value)
-        sys.stdout = captured_output  # and redirect stdout.
-        print_diff(5, -1, 8, 1)  # Call function.
+        sys.stdout = captured_output
+        print_diff(5, -1, 8, 1)
         output = "7\n6\n5\n4\n"
         self.assertEqual(captured_output.getvalue(), output)
         sys.stdout = sys.__stdout__
 
     def test_main(self):
-        args = ['find_missing.py', '-f', '/Users/aaron/Desktop/find_missing_bug2.txt',
-                '-p', 'DSC003\\.(\\d+)', '-l', 'DSC003.199']
-        main(args)
+        with open('output1.txt', 'r') as content_file:
+            captured_output = io.StringIO()
+            sys.stdout = captured_output
+            args = ['find_missing.py', '-f', 'find_missing_bug2.txt',
+                    '-p', 'DSC003\\.(\\d+)', '-l', 'DSC003.199']
+            main(args)
+            self.assertEqual(captured_output.getvalue(), content_file.read())
+            sys.stdout = sys.__stdout__
+
+        with open('output2.txt', 'r') as content_file:
+            captured_output = io.StringIO()
+            sys.stdout = captured_output
+            args = ['find_missing.py', '-f', 'find_missing_sample_tedious.txt',
+                    '-p', 'DSC003\\.(\\d+)', '-l', 'DSC003.310']
+            main(args)
+            self.assertEqual(captured_output.getvalue(), content_file.read())
+            sys.stdout = sys.__stdout__
 
 
 if __name__ == '__main__':
