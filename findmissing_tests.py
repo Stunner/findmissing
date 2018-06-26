@@ -1,7 +1,7 @@
 import unittest
 import io
 # import sys
-from find_missing import *
+from findmissing import *
 
 
 class FindMissingTests(unittest.TestCase):
@@ -64,7 +64,7 @@ class FindMissingTests(unittest.TestCase):
         with open('output1.txt', 'r') as content_file:
             captured_output = io.StringIO()
             sys.stdout = captured_output
-            args = ['find_missing.py', '-f', 'find_missing_bug2.txt',
+            args = ['findmissing.py', '-f', 'findmissing_bug2.txt',
                     '-p', 'DSC003\\.(\\d+)', '-l', 'DSC003.199']
             main(args)
             self.assertEqual(captured_output.getvalue(), content_file.read())
@@ -73,7 +73,7 @@ class FindMissingTests(unittest.TestCase):
         with open('output2.txt', 'r') as content_file:
             captured_output = io.StringIO()
             sys.stdout = captured_output
-            args = ['find_missing.py', '-f', 'find_missing_sample_tedious.txt',
+            args = ['findmissing.py', '-f', 'findmissing_sample_tedious.txt',
                     '-p', 'DSC003\\.(\\d+)', '-l', 'DSC003.310']
             main(args)
             self.assertEqual(captured_output.getvalue(), content_file.read())
