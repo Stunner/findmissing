@@ -4,18 +4,9 @@ import argparse
 import re
 import io
 
-# if sys.version_info[0] == 2:  # Not named on 2.6
-#     from StringIO import StringIO
-# else:
-#     from io import StringIO
-
-# Works with:
-# cat ~/Desktop/gdrive.txt | python3 ~/Dropbox/Programming/Projects/Open\ Source/find_missing/find_missing.py -p
-# 'DSC004.(\d\d\d)' -l DSC004.099
 
 # TODO: Allow for ranges of missing numbers (i.e. 22-45 54-56 72 73 75) to be displayed instead of listing out all
-# missing numbers which cn be tedious to digest
-
+# missing numbers which can be tedious to digest
 
 class G:
     parser = None
@@ -110,12 +101,10 @@ def print_diff(diff, asc_or_desc, last_seen, stop_early):
         if G.last_match_int is not None and G.last_match_int < last_seen:
             return True  # stop reading as soon as we get to last number
         print_last_seen(last_seen)
-        # print(str(last_seen))
     return False
 
 
 def main(args):
-    # print("args: " + str(args))
     args, G.parser = process_args(args)
     pattern_str = re.compile(args.pattern)
     last_match = None
@@ -169,8 +158,8 @@ def main(args):
                     break
             prev_itr_num = iterable_num
             last_seen = iterable_num
-
     args.file.close()
+
     # Print strings up to last param.
     if last_match and not aborted:
         iterable_str = last_match.group(1)

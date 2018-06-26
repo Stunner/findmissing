@@ -1,6 +1,4 @@
 import unittest
-import io
-# import sys
 from findmissing import *
 
 
