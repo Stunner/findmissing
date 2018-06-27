@@ -93,6 +93,11 @@ def print_last_seen(last_seen):
 
 
 def print_diff(diff, asc_or_desc, last_seen, stop_early):
+    if last_seen == -1:
+        # Assume we are ascending if last_seen hasn't been set,
+        # as this can happen when first param is provided with value 0.
+        asc_or_desc = 1
+
     for j in range(diff - stop_early):
         if asc_or_desc == 1:
             last_seen = last_seen + 1
@@ -128,9 +133,9 @@ def main(args):
             first_expected = int(first_match.group(1))
 
     ascend_or_descend = 0
-    i = -1
     difference = 0
     aborted = False
+    i = -1
     while True:
         i += 1
         line = args.file.readline()
@@ -152,7 +157,7 @@ def main(args):
                 stop_early = 1
             if difference < 0:  # keep reading until we get to first expected number
                 continue
-            elif difference > 1 and i > 0:
+            elif difference > 1: # and i > 0: # TODO: add tests to guard against potential regression here
                 aborted = print_diff(difference, ascend_or_descend, last_seen, stop_early)
                 if aborted:
                     break
