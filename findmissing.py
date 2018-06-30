@@ -99,6 +99,11 @@ def print_diff(diff, asc_or_desc, last_seen, stop_early):
         asc_or_desc = 1
 
     for j in range(diff - stop_early):
+        if asc_or_desc == 0:
+            if last_seen == 0:
+                # assume ascending as last seen should never be decremented to -1
+                asc_or_desc = 1
+
         if asc_or_desc == 1:
             last_seen = last_seen + 1
         else:
@@ -158,6 +163,10 @@ def main(args):
             if difference < 0:  # keep reading until we get to first expected number
                 continue
             elif difference > 1: # and i > 0: # TODO: add tests to guard against potential regression here
+                aborted = print_diff(difference, ascend_or_descend, last_seen, stop_early)
+                if aborted:
+                    break
+            elif difference == 1 and i == 0 and first_expected is not None:
                 aborted = print_diff(difference, ascend_or_descend, last_seen, stop_early)
                 if aborted:
                     break
