@@ -28,6 +28,7 @@ Id                                  Name         Type   Size     Created
 1RknmQFhtzNDorO4Lp8AGpr4S_zmBqwKc   DSC003.008   bin    1.1 GB   2018-06-12 14:26:43
 1Dgt5ZFKT3zilwPZdiPyPmhM0Y3Fz_xo8   DSC003.010   bin    1.1 GB   2018-06-12 16:57:14
 16QPadXBXPGIwiRhzMFRuY7tZkdIlJ1DI   DSC003.011   bin    1.1 GB   2018-06-12 16:54:57
+1zD492J3F42Azeoct82DMlXRRuWA8AUiY   DSC003.015   bin    1.1 GB   2018-06-12 17:32:12
 1bah8OM_F49BNeoct8M2DlXRRuOD8AUiY   DSC003.019   bin    1.1 GB   2018-06-12 17:24:41
 1eZfY4qn3Ol6w1BFafQn6YDy1uOU82NNA   DSC003.020   bin    1.1 GB   2018-06-12 17:21:46
 1x-P84Jq1cyuJCW2Opvy4m_qOjOHvAKtA   DSC003.021   bin    1.1 GB   2018-06-12 17:27:16
@@ -51,7 +52,6 @@ $ python findmissing.py -f readme_sample.txt -p "DSC003\.(\d+)"
 12
 13
 14
-15
 16
 17
 18
@@ -76,7 +76,6 @@ $ python findmissing.py -f readme_sample.txt -p "DSC003\.(\d+)" -l DSC003.029
 12
 13
 14
-15
 16
 17
 18
@@ -92,5 +91,38 @@ $ python findmissing.py -f readme_sample.txt -p "DSC003\.(\d+)" -l DSC003.029
 Conversely, files started at `DSC003.000`, which we can inform the script of as well:
 
 ```
+$ python findmissing.py -f readme_sample.txt -p "DSC003\.(\d+)" -i DSC003.0 -l DSC003.29
+0
+1
+3
+4
+5
+6
+7
+9
+12
+13
+14
+16
+17
+18
+22
+23
+24
+26
+27
+28
+29
+```
 
+These two options can also be used together to hone in on a specific sub-range of missing values. For instance let's say we wanted to only view missing values from `10` to `20` (inclusive):
+
+```
+$ python findmissing.py -f readme_sample.txt -p "DSC003\.(\d+)" -i DSC003.10 -l DSC003.20
+12
+13
+14
+16
+17
+18
 ```
