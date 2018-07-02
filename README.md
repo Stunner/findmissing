@@ -61,6 +61,30 @@ $ python findmissing.py -f readme_sample.txt -p "DSC003\.(\d+)"
 $ 
 ```
 
+The `-p` flag is required and takes in a regex expression with a group (specified with parenthesis) denoting which portion of the string contains the number.
+
+Also, the script is capable of reading from `stdin` so redirecting output to it is possible. Here is the aformentioned example but reading from `stdin` instead of from a file:
+
+```
+$ cat readme_sample.txt | python findmissing.py -p "DSC003\.(\d+)"
+3
+4
+5
+6
+7
+9
+12
+13
+14
+16
+17
+18
+22
+23
+24
+$ 
+```
+
 # Options
 
 In the example above, files climbed up to `DSC003.029`. We can inform the script of this with the `-l` flag like so:
