@@ -6,7 +6,7 @@ import io
 
 
 # TODO: Allow for ranges of missing numbers (i.e. 22-45 54-56 72 73 75) to be displayed instead of listing out all
-# missing numbers which can be tedious to digest
+# missing numbers which can be tedious to digest when printed individually
 
 class G:
     parser = None
@@ -162,7 +162,7 @@ def main(args):
                 stop_early = 1
             if difference < 0:  # keep reading until we get to first expected number
                 continue
-            elif difference > 1: # and i > 0: # TODO: add tests to guard against potential regression here
+            elif difference > 1:
                 aborted = print_diff(difference, ascend_or_descend, last_seen, stop_early)
                 if aborted:
                     break
