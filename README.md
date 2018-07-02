@@ -37,7 +37,7 @@ Id                                  Name         Type   Size     Created
 
 > **Note**: The above sample can be found in readme_sample.txt.
 
-The above output shows eight 1.1 GB files in google drive. If we look at the extensions of the files it is evident that there are several files missing.
+The above output shows nine 1.1 GB files in google drive. If we look at the extensions of the files it is evident that there are several files missing.
 
 `findmissing` can be used to determine the missing files like so:
 
@@ -87,10 +87,10 @@ $
 
 # Options
 
-In the example above, files climbed up to `DSC003.029`. We can inform the script of this with the `-l` flag like so:
+In the example above, files climbed up to `DSC003.029`. We can inform the script of this with the `--last` (`-l`) flag like so:
 
 ```
-$ python findmissing.py -f readme_sample.txt -p "DSC003\.(\d+)" -l DSC003.029
+$ python findmissing.py -f readme_sample.txt -p "DSC003\.(\d+)" --last DSC003.029
 3
 4
 5
@@ -112,10 +112,10 @@ $ python findmissing.py -f readme_sample.txt -p "DSC003\.(\d+)" -l DSC003.029
 29
 ```
 
-Conversely, files started at `DSC003.000`, which we can inform the script of as well:
+Conversely, files started at `DSC003.000`, which we can inform the script of as well (with `--first` [`-i`]):
 
 ```
-$ python findmissing.py -f readme_sample.txt -p "DSC003\.(\d+)" -i DSC003.0 -l DSC003.29
+$ python findmissing.py -f readme_sample.txt -p "DSC003\.(\d+)" --first DSC003.0 --last DSC003.29
 0
 1
 3
