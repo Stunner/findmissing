@@ -142,13 +142,13 @@ def main(args):
     aborted = False
     i = -1
     while True:
-        i += 1
         line = args.file.readline()
         if not line:
             break
 
         iterable_num = get_specified_num(pattern_str, line)
         if iterable_num is not None:
+            i += 1  # only increment when we find an iterable number
             if i > 0:
                 ascend_or_descend = asc_or_desc_check(prev_itr_num, iterable_num, ascend_or_descend)
 
