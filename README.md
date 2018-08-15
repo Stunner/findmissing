@@ -2,6 +2,8 @@
 
 `findmissing` is a python script that prints out missing numbers in an incrementing or decrementing sequence of numbers.
 
+`findmissing` has been developed and tested with Python 2.7 and 3.6.
+
 ## Use Case
 
 I had some really big files I needed to upload to Google Drive, so `split` them into 1 GB files. An annoyance with the Google Web interface is that it will upload files that are queued by random rather than in order. So if you queue up the following files:
