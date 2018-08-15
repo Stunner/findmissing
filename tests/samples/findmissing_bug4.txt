@@ -1,0 +1,60 @@
+# Commit f5f30e9 fixes issue that was encountered when running the following:
+# cat bug.txt | python3 findmissing.py -p "$q\.(\d+)" -i "$q.0" -l "$q.99"
+total 107010656
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:57 DSC004.022
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:54 DSC004.023
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:51 DSC004.024
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:49 DSC004.025
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:46 DSC004.026
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:41 DSC004.027
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:44 DSC004.028
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:48 DSC004.029
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:43 DSC004.030
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:35 DSC004.031
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:40 DSC004.032
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:38 DSC004.033
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:37 DSC004.034
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:33 DSC004.035
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:31 
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:31 DSC004.036
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:30 DSC004.037
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:26 DSC004.038
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:28 DSC004.039
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:21 DSC004.040
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:23 DSC004.041
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:10 DSC004.042
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:20 DSC004.043
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:13 DSC004.044
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:25 DSC004.045
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:18 DSC004.046
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:12 DSC004.047
+#
+##
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:15 DSC004.048
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:17 DSC004.049
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 21:00 DSC004.077
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:59 DSC004.078
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:56 DSC004.079
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:52 DSC004.080
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:00 DSC004.081
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:02 DSC004.082
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 19:55 DSC004.083
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 19:39 DSC004.084
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:03 DSC004.085
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:05 DSC004.086
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 19:57 DSC004.087
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 19:58 DSC004.088
+#
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:07 DSC004.089
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 20:08 DSC004.090
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 19:52 DSC004.091
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 19:53 DSC004.092
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 19:50 DSC004.093
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 19:44 DSC004.094
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 19:49 DSC004.095
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 19:41 DSC004.096
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 19:45 DSC004.097
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 19:47 DSC004.098
+-rw-r--r--  1 aaron  staff  1073741824 Aug  1 19:42 DSC004.099
+-rw-r--r--  1 aaron  staff  1073741825 Aug  1 20:31 
+#

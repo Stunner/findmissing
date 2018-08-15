@@ -88,6 +88,15 @@ class FindMissingTests(unittest.TestCase):
             self.assertEqual(captured_output.getvalue(), content_file.read())
             sys.stdout = sys.__stdout__
 
+        with open('output/output4.txt', 'r') as content_file:
+            captured_output = io.StringIO()
+            sys.stdout = captured_output
+            args = ['../findmissing.py', '-f', 'samples/findmissing_bug4.txt',
+                    '-p', 'DSC004\\.(\\d+)', '-i', 'DSC004.1', '-l', 'DSC004.99']
+            main(args)
+            self.assertEqual(captured_output.getvalue(), content_file.read())
+            sys.stdout = sys.__stdout__
+
 
 if __name__ == '__main__':
     unittest.main()
