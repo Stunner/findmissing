@@ -79,6 +79,8 @@ def calc_diff(asc_or_des, iterable_num, last_seen):
 
 
 def print_last_seen(last_seen):
+    # work-around for a problem with StringIO's capture of std_out on python 2.7 
+    # (see https://github.com/Stunner/findmissing/issues/5#issue-473115389)
     # reference: https://stackoverflow.com/a/12028682/347339
     try:  # Python 2.7 compatibility
         with io.BytesIO(str(last_seen)) as file:
