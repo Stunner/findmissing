@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Stunner/findmissing.svg?branch=master)](https://travis-ci.org/Stunner/findmissing)
+
 # About
 
 `findmissing` is a python script that prints out missing numbers in an incrementing or decrementing sequence of numbers.
