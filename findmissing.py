@@ -138,12 +138,7 @@ def get_first_match(pattern_str, args):
             first_expected = int(first_match.group(1))
     return first_expected
 
-def main(args):
-    args, G.parser = process_args(args)
-    pattern_str = re.compile(args.pattern)
-    last_match = get_last_match(pattern_str, args)
-    first_expected = get_first_match(pattern_str, args)
-
+def find_missing(pattern_str, args, first_expected):
     last_seen = -1
     prev_itr_num = -1
     ascend_or_descend = 0
@@ -182,7 +177,9 @@ def main(args):
             prev_itr_num = iterable_num
             last_seen = iterable_num
     args.file.close()
+    return (difference, last_seen, aborted)
 
+def print_up_to_last(last_match, last_seen, difference, aborted):
     # Print strings up to last param.
     if last_match and not aborted:
         iterable_str = last_match.group(1)
@@ -192,6 +189,15 @@ def main(args):
                 last_seen += 1
                 print(str(last_seen))
 
+def main(args):
+    args, G.parser = process_args(args)
+    pattern_str = re.compile(args.pattern)
+    first_expected = get_first_match(pattern_str, args)
+    last_match = get_last_match(pattern_str, args) # this function must be run before print_diff()
+
+    difference, last_seen, aborted = find_missing(pattern_str, args, first_expected)
+
+    print_up_to_last(last_match, last_seen, difference, aborted)
 
 if __name__ == '__main__':
     main(sys.argv)
