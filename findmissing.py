@@ -115,13 +115,8 @@ def print_diff(diff, asc_or_desc, last_seen, stop_early):
         print_last_seen(last_seen)
     return False
 
-
-def main(args):
-    args, G.parser = process_args(args)
-    pattern_str = re.compile(args.pattern)
+def get_last_match(pattern_str, args):
     last_match = None
-    last_seen = -1
-    prev_itr_num = -1
     if args.last:
         last_match = re.search(pattern_str, args.last)
         if not last_match:
@@ -130,6 +125,9 @@ def main(args):
         else:
             last_match_str = last_match.group(1)
             G.last_match_int = int(last_match_str)
+    return last_match
+
+def get_first_match(pattern_str, args):
     first_expected = None
     if args.first:
         first_match = re.search(pattern_str, args.first)
@@ -138,7 +136,16 @@ def main(args):
                                  "\nLast provided: " + args.first + "\nRegex provided: " + args.pattern)
         else:
             first_expected = int(first_match.group(1))
+    return first_expected
 
+def main(args):
+    args, G.parser = process_args(args)
+    pattern_str = re.compile(args.pattern)
+    last_match = get_last_match(pattern_str, args)
+    first_expected = get_first_match(pattern_str, args)
+
+    last_seen = -1
+    prev_itr_num = -1
     ascend_or_descend = 0
     difference = 0
     aborted = False
